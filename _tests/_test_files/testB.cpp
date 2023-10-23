@@ -90,7 +90,7 @@ bool test_find_index(bool debug){
 }
 
 bool test_remove(bool debug){
-  bool flag1, flag2, flag3;
+  bool flag1 = true, flag2 = true, flag3 = true;
   DoubleHash<record> mHash; 
   record mRecords[] = {record(120, 13.5), record(121, 14.7), record(42, 13.8), record(38, 13.9), record(159, 13.8)}; 
   int size = 5; 
@@ -199,10 +199,39 @@ bool test_remove_chained_hash(bool debug){
     for(int i = 0; mHash.size() != 0; i++){
       cout<<"removing: "<<mRecords[i]<<endl;
       mHash.remove(mRecords[i]._key); 
+      cout<<"size: "<<mHash.size()<<endl; 
     }
   }
   cout<<"after removal"<<endl; 
   cout<<mHash<<endl; 
+
+  return true; 
+}
+
+bool test_insert_chained_hash(bool debug){
+  bool flag1 = true, flag2 = true, flag3 = true;
+  ChainedHash<record> mHash; 
+  record mRecords[] = {record(120, 13.5), record(121, 14.7), record(42, 13.8), record(38, 13.9), record(159, 13.8)}; 
+  record temp; 
+  int size = 5; 
+ 
+  for(int i = 0; i < size; i++){
+    mHash.insert(mRecords[i]); 
+  }  
+
+  if(debug){
+    record insertRec(38, 14.5); 
+    cout<<"TEST - INSERT ALREADY EXIST - CHAINED HASH"<<endl; 
+    cout<<"current structure: "<<endl;
+    cout<<mHash<<endl; 
+
+    cout<<"inserting: "<<insertRec<<endl; 
+    mHash.insert(insertRec); 
+    cout<<"after insertion: "<<endl; 
+    cout<<mHash<<endl; 
+    cout<<"size: "<<mHash.size()<<endl; 
+  }
+  return true; 
 }
 
 TEST(TEST_DOUBLE_HASH, testInsert){
@@ -218,11 +247,15 @@ TEST(TEST_DOUBLE_HASH, testRemove){
 }
 
 TEST(TEST_CHAINED_HASH, testFind){
-  EXPECT_EQ(1, test_find_chained_hash(true)); 
+  EXPECT_EQ(1, test_find_chained_hash(false)); 
 }
 
 TEST(TEST_CHAINED_HASH, testRemoveChain){
   EXPECT_EQ(1, test_remove_chained_hash(true)); 
+}
+
+TEST(TEST_CHAINED_HASH, testInsertChain){
+  EXPECT_EQ(1, test_insert_chained_hash(true)); 
 }
 
 TEST(TEST_STUB, TestStub) {

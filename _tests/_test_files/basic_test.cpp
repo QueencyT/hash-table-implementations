@@ -154,6 +154,7 @@ bool chained_hash_basic_test(bool debug = false){
     cout << "---------------------------------------------------------------" << endl;
     return true;
 }
+
 bool chained_hash_remove_test(bool debug = false){
     ChainedHash<HashRecord> chained_hash;
     cout << "DoubleHash remove test. " << endl;
@@ -175,22 +176,28 @@ bool chained_hash_remove_test(bool debug = false){
     else{
         cout << "FAILED to remove 42." << endl;
     }
+    cout<<"final size: "<<chained_hash.size()<<endl; 
     return true;
     return true;
 }
 
 TEST(TEST_DOUBLE_BASIC, TestDoubleHashBasic){
-  bool success = double_hash_basic_test(true);
+  bool success = double_hash_basic_test(false);
   EXPECT_EQ(success, true);
 }
 
 TEST(TEST_DOUBLE_REMOVE, TestDoubleHashRemove){
-  bool success = double_hash_remove_test(true);
+  bool success = double_hash_remove_test(false);
   EXPECT_EQ(success, true);
 }
 TEST(TEST_CHAINED_BASIC, TestChainedHashBasic){
   bool success = chained_hash_basic_test(true);
   EXPECT_EQ(success, true);
+}
+
+TEST(TEST_CHAINED_REMOVE, TestChainedHashRemove){
+    bool success = chained_hash_remove_test(true); 
+    EXPECT_EQ(success, true);
 }
 
 // TEST(TEST_CHAINED_REMOVE, TestChainedHashRemove){

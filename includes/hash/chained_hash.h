@@ -70,15 +70,17 @@ bool ChainedHash<T>::find(int key, T& result) const{
 
 template <typename T>
 bool ChainedHash<T>::insert(const T& entry){
+   // cout<<"entry: "<<entry<<endl; 
     int index = hash(entry._key); 
     T findThis(entry._key); 
     tree_node<T>* foundEntry; 
+    
     if(total_records == TABLE_SIZE){
         return false; 
     }
 
     if(is_present(entry._key)){ //already there
-        _data[index].search(entry, foundEntry); 
+        _data[index].search(entry, foundEntry); //was just entry before //nvm works either way
         *foundEntry = entry; //update entry 
         return false; //did not insert 
     }
@@ -90,13 +92,14 @@ bool ChainedHash<T>::insert(const T& entry){
 
 template <typename T> 
 bool ChainedHash<T>::remove(int key){
-    T findThis(key, 0); 
+    T findThis(key); 
     int index = hash(key); 
 
     if(_data[index].erase(findThis)){
         total_records--; 
         return true; 
     }
+
     return false; 
 }//remove this key
 #endif 
