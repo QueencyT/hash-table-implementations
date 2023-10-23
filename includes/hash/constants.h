@@ -3,6 +3,6 @@
 #include  <math.h>
 using namespace std;
 
-const int TABLE_SIZE = 19; //811; //180799; //2121737;//180799;// 101119; //811;
+const int TABLE_SIZE = 811; //811; //180799; //2121737;//180799;// 101119; //811;
 
 #endif // CONSTANTS_H
