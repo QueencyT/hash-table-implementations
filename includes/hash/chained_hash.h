@@ -74,7 +74,7 @@ bool ChainedHash<T>::insert(const T& entry){
         return false; 
     }
 
-    if(is_present(entry._key)){
+    if(is_present(entry._key)){ //already there
         _data[index].search(entry, foundEntry); 
         *foundEntry = entry; //update entry 
         return false; //did not insert 
@@ -89,6 +89,7 @@ template <typename T>
 bool ChainedHash<T>::remove(int key){
     T findThis(key, 0); 
     int index = hash(key); 
+
     if(_data[index].erase(findThis)){
         total_records--; 
         return true; 

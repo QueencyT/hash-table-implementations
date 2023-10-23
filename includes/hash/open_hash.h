@@ -53,11 +53,11 @@ private:
     bool find_index(int key, int& index) const{ //key being ID number I assume 
        int count = 0, findIndex = hash(key); 
        while(_data[findIndex]._key != key && !never_used(findIndex) && count < CAPACITY){ //while still in neighborhood
+        findIndex++; 
+        count++; 
         if(findIndex == CAPACITY){
             findIndex = 0; 
         }
-        findIndex++; 
-        count++; 
        }
        index = findIndex; 
        return (_data[index]._key == key);  

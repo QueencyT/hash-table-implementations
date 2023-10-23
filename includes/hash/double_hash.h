@@ -62,11 +62,11 @@ private:
     bool find_index(int key, int& index) const{ //key being ID number I assume 
        int count = 0, findIndex = hash(key); 
        while(_data[findIndex]._key != key && count < CAPACITY){
-        if(findIndex == CAPACITY){
-            findIndex = 0; 
-        }
         findIndex++; 
         count++; 
+        if(findIndex == CAPACITY){ 
+            findIndex = 0; 
+        }
        }
        index = findIndex; 
        return (_data[index]._key == key);  
