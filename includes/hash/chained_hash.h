@@ -72,15 +72,15 @@ bool ChainedHash<T>::is_present(int key) const{
 template <typename T>
 bool ChainedHash<T>::insert(const T& entry){ 
     int index = hash(entry._key); 
-    T findThis(entry._key); 
+    //T findThis(entry._key); 
     tree_node<T>* foundEntry; 
     
     if(total_records == TABLE_SIZE){
         return false; 
     }
 
-    if(_data[index].search(entry._key, foundEntry)){ //already there
-        *foundEntry = entry; //update entry 
+    if(_data[index].search(entry, foundEntry)){ //already there
+        foundEntry->_item = entry; //update entry 
         return false; //did not insert 
     }
     
