@@ -46,13 +46,8 @@ private:
 template <typename T>
 ChainedHash<T>::ChainedHash( ){
     total_records = 0; 
-}                              //CTOR
+}   
 
-template <typename T>
-bool ChainedHash<T>::is_present(int key) const{
-    T temp; 
-    return find(key, temp); 
-}//is this key present in table?
 
 template <typename T>
 bool ChainedHash<T>::find(int key, T& result) const{
@@ -64,13 +59,18 @@ bool ChainedHash<T>::find(int key, T& result) const{
         result = foundEntry->_item; 
         return true; 
     } 
-
     return false;
-}//result <- record with key
+}//result <- record with key                           
 
 template <typename T>
-bool ChainedHash<T>::insert(const T& entry){
-   // cout<<"entry: "<<entry<<endl; 
+bool ChainedHash<T>::is_present(int key) const{
+    T temp; 
+    return find(key, temp); 
+}//is this key present in table?
+
+
+template <typename T>
+bool ChainedHash<T>::insert(const T& entry){ 
     int index = hash(entry._key); 
     T findThis(entry._key); 
     tree_node<T>* foundEntry; 
@@ -79,20 +79,20 @@ bool ChainedHash<T>::insert(const T& entry){
         return false; 
     }
 
-    if(is_present(entry._key)){ //already there
-        _data[index].search(entry, foundEntry); //was just entry before //nvm works either way
+    if(_data[index].search(entry._key, foundEntry)){ //already there
         *foundEntry = entry; //update entry 
         return false; //did not insert 
     }
     
-    _data[index].insert(entry); //hmm? will this do what I want
-    total_records++; 
+    if(_data[index].insert(entry)) //dunno
+        total_records++;  
+
     return true; 
 }           //insert entry; false if overwriting.
 
 template <typename T> 
 bool ChainedHash<T>::remove(int key){
-    T findThis(key); 
+    T findThis(key); //made change right here from (key, 0) to just key dunno if changes anything
     int index = hash(key); 
 
     if(_data[index].erase(findThis)){

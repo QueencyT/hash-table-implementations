@@ -219,7 +219,7 @@ bool test_insert_chained_hash(bool debug){
     mHash.insert(mRecords[i]); 
   }  
 
-  if(debug){
+  if(false){
     record insertRec(38, 14.5); 
     cout<<"TEST - INSERT ALREADY EXIST - CHAINED HASH"<<endl; 
     cout<<"current structure: "<<endl;
@@ -230,6 +230,47 @@ bool test_insert_chained_hash(bool debug){
     cout<<"after insertion: "<<endl; 
     cout<<mHash<<endl; 
     cout<<"size: "<<mHash.size()<<endl; 
+  }
+
+
+  //10 --> 10, 20, 30, 40, 50, 60 
+  if(debug){
+    cout<<"chaining hash\n";
+    ChainedHash<record> ourHash; 
+    record ourRecords[] = {record(10, 13.5), record(20, 14.7), record(30, 13.8), record(40, 13.9), record(50, 13.8), record(60, 14.8), 
+                           record(70, 80.1), record(80, 13.9), record(90, 10.5), record(100, 10.11)}; 
+    
+    for(int i = 0; i < ourHash.capacity(); i++){
+      ourHash.insert(ourRecords[i]); 
+    }
+
+    cout<<"after insertions: "<<endl; 
+    cout<<ourHash<<endl; 
+    cout<<"size: "<<ourHash.size()<<endl; 
+  }
+
+  if(false){
+    ChainedHash<record> ourHash; 
+    vector<record> ourRecords; 
+    srand(time(0)); 
+    int expectedSize = 0; 
+
+    for( int i = 0; ourHash.size() != ourHash.capacity(); i++){
+      double val = rand() % 1000 + 0.5; 
+      record aRecord(rand() % 100, val);  //will just be continuously updating since so low
+      if(ourHash.insert(aRecord))
+        expectedSize++; 
+
+      if(ourHash.size() != expectedSize){
+        cout<<"FAILED: "<<endl; 
+        cout<<"expected size"<<(i + 1)<<endl; 
+        cout<<"actual size: "<<ourHash.size()<<endl; 
+        break; 
+      }
+    }
+    cout<<"curr structure: "<<endl; 
+    cout<<ourHash<<endl; 
+    cout<<"size: "<<ourHash.size()<<endl; 
   }
   return true; 
 }
@@ -251,7 +292,7 @@ TEST(TEST_CHAINED_HASH, testFind){
 }
 
 TEST(TEST_CHAINED_HASH, testRemoveChain){
-  EXPECT_EQ(1, test_remove_chained_hash(true)); 
+  EXPECT_EQ(1, test_remove_chained_hash(false)); 
 }
 
 TEST(TEST_CHAINED_HASH, testInsertChain){
