@@ -26,7 +26,10 @@ public:
     template<class TT>
     friend ostream& operator << (ostream& outs, const ChainedHash<TT>& h){
         for(int i = 0; i < TABLE_SIZE; i++){
-            outs<<h._data[i]<<endl; 
+           if(h._data[i].empty()){
+            continue; 
+           }
+           outs<<h._data[i]; 
         }
         return outs; 
     }

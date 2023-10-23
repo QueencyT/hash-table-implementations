@@ -3,6 +3,7 @@
 #include <iomanip>
 
 #include "../../includes/hash/double_hash.h"
+#include "../../includes/hash/chained_hash.h"
 #include "../../includes/hash/record.h"
 
 using namespace std;
@@ -16,7 +17,7 @@ bool test_stub(bool debug = false)
 }
 
 bool test_insert(bool debug){
-  bool flag1; 
+  bool flag1 = true; 
   DoubleHash<record> mHash; 
   record mRecords[] = {record(120, 13.5), record(121, 14.7), record(42, 13.8), record(190, 13.8), record(308, 13.8), record(422, 13.8)}; 
   int size = 6; 
@@ -150,16 +151,78 @@ bool test_remove(bool debug){
   return flag1 && flag2 && flag3; 
 }
 
+bool test_find_chained_hash(bool debug){
+  bool flag1 = true, flag2 = true, flag3 = true;
+  ChainedHash<record> mHash; 
+  record mRecords[] = {record(120, 13.5), record(121, 14.7), record(42, 13.8), record(38, 13.9), record(159, 13.8)}; 
+  record temp; 
+  int size = 5; 
+  
+  for(int i = 0; i < size; i++){
+    mHash.insert(mRecords[i]); 
+  }
+
+  if(debug){
+    cout<<"TEST - FIND EVERYTHING - CHAINED HASH"<<endl; 
+    cout<<"current structure: "<<endl; 
+    cout<<mHash<<endl; 
+    cout<<"total records: "<<mHash.size()<<endl; 
+
+    for(int i = 0; i < size; i++){
+      if(!mHash.find(mRecords[i]._key, temp)){
+        cout<<"failed to find: "<<mRecords[i]<<endl; 
+        flag1 = false; 
+        break; 
+      }
+    }
+  }
+
+  return flag1; 
+}
+
+bool test_remove_chained_hash(bool debug){
+  bool flag1 = true, flag2 = true, flag3 = true;
+  ChainedHash<record> mHash; 
+  record mRecords[] = {record(120, 13.5), record(121, 14.7), record(42, 13.8), record(38, 13.9), record(159, 13.8)}; 
+  record temp; 
+  int size = 5; 
+ 
+  
+  for(int i = 0; i < size; i++){
+    mHash.insert(mRecords[i]); 
+  } 
+
+  if(debug){
+    cout<<"REMOVE - CHAINED HASH - TILL EMPTY\n"; 
+    cout<<"current structure\n";
+    cout<<mHash<<endl; 
+    for(int i = 0; mHash.size() != 0; i++){
+      cout<<"removing: "<<mRecords[i]<<endl;
+      mHash.remove(mRecords[i]._key); 
+    }
+  }
+  cout<<"after removal"<<endl; 
+  cout<<mHash<<endl; 
+}
+
 TEST(TEST_DOUBLE_HASH, testInsert){
-  EXPECT_EQ(1, test_insert(true)); 
+  EXPECT_EQ(1, test_insert(false)); 
 }
 
 TEST(TEST_DOUBLE_HASH, testFindIndex){
-  EXPECT_EQ(1, test_find_index(true)); 
+  EXPECT_EQ(1, test_find_index(false)); 
 }
 
 TEST(TEST_DOUBLE_HASH, testRemove){
-  EXPECT_EQ(1, test_remove(true)); 
+  EXPECT_EQ(1, test_remove(false)); 
+}
+
+TEST(TEST_CHAINED_HASH, testFind){
+  EXPECT_EQ(1, test_find_chained_hash(true)); 
+}
+
+TEST(TEST_CHAINED_HASH, testRemoveChain){
+  EXPECT_EQ(1, test_remove_chained_hash(true)); 
 }
 
 TEST(TEST_STUB, TestStub) {
